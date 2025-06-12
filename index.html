@@ -1,142 +1,101 @@
-<!-- Match Listings -->
-<div id="matchList" class="space-y-4 overflow-y-auto h-[calc(100vh-160px)] pt-2">
-  <!-- Match 1 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>England - Premier League</div>
-      <div>12/06, 20:00</div>
-    </div>
-    <div class="font-bold mb-2">Arsenal vs Chelsea</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.50">1.50</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.80">3.80</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="5.20">5.20</button>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Betika Clone</title>
+  <link rel="manifest" href="manifest.json" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+
+    function updateOdds() {
+      const odds = document.querySelectorAll('[data-odds]');
+      odds.forEach(el => {
+        const base = parseFloat(el.dataset.base);
+        const fluctuation = (Math.random() * 0.1 - 0.05).toFixed(2);
+        const newVal = (base + parseFloat(fluctuation)).toFixed(2);
+        el.innerText = newVal;
+      });
+    }
+    setInterval(updateOdds, 3600000); // every hour
+
+    let banners = [
+      'Bet Big, Win Bigger – Try Live Bets!',
+      'Exclusive Bonuses for New Players!',
+      'Fast Withdrawals, Real Wins – Play Now!'
+    ];
+    let currentBanner = 0;
+    function rotateBanner() {
+      document.getElementById('promoText').innerText = banners[currentBanner];
+      currentBanner = (currentBanner + 1) % banners.length;
+    }
+    setInterval(rotateBanner, 30000); // every 30 seconds
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0f172a] text-white font-sans">
+  <!-- Fixed Promo Banner -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-yellow-400 text-black p-3 shadow flex justify-center items-center">
+    <span id="promoText" class="font-bold text-center">Bet Big, Win Bigger – Try Live Bets!</span>
+  </header>
+
+  <!-- Top Tabs -->
+  <div class="pt-16 px-4 bg-[#0f172a] border-b border-gray-700 overflow-x-auto whitespace-nowrap text-sm flex gap-4">
+    <span class="text-green-400 font-semibold">Live (74)</span>
+    <span>Aviator</span>
   </div>
 
-  <!-- Match 2 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Germany - Bundesliga</div>
-      <div>12/06, 19:30</div>
-    </div>
-    <div class="font-bold mb-2">Bayern Munich vs Dortmund</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.60">1.60</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.00">4.00</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="6.00">6.00</button>
-    </div>
-  </div>
+  <!-- Main Content Scrollable Match List -->
+  <main class="h-[calc(100vh-8rem)] overflow-y-auto px-4 py-4 space-y-4">
+    <!-- Demo Matches -->
+    <div id="matchList" class="space-y-4">
+      <!-- Matches dynamically generated -->
+      <script>
+        const matches = [
+          { league: 'Poland - II Liga', time: '12/06, 16:00', teams: 'Wieczysta Krakow vs Kks 1925 Kalisz', odds: [1.41, 4.30, 6.40] },
+          { league: 'Lithuania - I Lyga', time: '12/06, 18:00', teams: 'Babrungas Plunge vs FK Kauno Zalgiris', odds: [1.21, 6.20, 10.00] },
+          { league: 'England - Premier League', time: '13/06, 21:00', teams: 'Arsenal vs Chelsea', odds: [2.00, 3.50, 3.80] },
+          { league: 'Spain - La Liga', time: '13/06, 23:00', teams: 'Real Madrid vs Barcelona', odds: [2.10, 3.20, 3.50] },
+          { league: 'Germany - Bundesliga', time: '14/06, 16:30', teams: 'Bayern vs Dortmund', odds: [1.85, 3.60, 4.20] },
+          { league: 'Italy - Serie A', time: '14/06, 19:00', teams: 'Inter vs Milan', odds: [2.25, 3.00, 3.75] },
+          { league: 'France - Ligue 1', time: '15/06, 20:00', teams: 'PSG vs Lyon', odds: [1.70, 4.00, 5.00] },
+          { league: 'Netherlands - Eredivisie', time: '15/06, 17:00', teams: 'Ajax vs PSV', odds: [2.30, 3.10, 3.90] },
+          { league: 'Portugal - Primeira Liga', time: '16/06, 21:30', teams: 'Porto vs Benfica', odds: [2.40, 3.00, 3.60] },
+          { league: 'USA - MLS', time: '16/06, 01:00', teams: 'LA Galaxy vs Inter Miami', odds: [2.60, 3.20, 2.90] },
+        ];
 
-  <!-- Match 3 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Spain - La Liga</div>
-      <div>12/06, 21:00</div>
+        matches.forEach(m => {
+          document.write(`
+            <div class="bg-[#334155] p-4 rounded shadow text-sm">
+              <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
+                <div>${m.league}</div>
+                <div>${m.time}</div>
+              </div>
+              <div class="font-bold mb-2">${m.teams}</div>
+              <div class="grid grid-cols-3 gap-2 text-center">
+                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[0]}">${m.odds[0]}</button>
+                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[1]}">${m.odds[1]}</button>
+                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[2]}">${m.odds[2]}</button>
+              </div>
+            </div>
+          `);
+        });
+      </script>
     </div>
-    <div class="font-bold mb-2">Real Madrid vs Barcelona</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.70">1.70</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.50">3.50</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.80">4.80</button>
-    </div>
-  </div>
+  </main>
 
-  <!-- Match 4 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Italy - Serie A</div>
-      <div>12/06, 18:00</div>
+  <!-- Fixed Bottom Betslip -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-[#1e293b] border-t border-gray-700 p-4 z-50">
+    <div class="text-sm text-gray-300 mb-2">Do you have a shared betslip code? Enter it here.</div>
+    <div class="flex gap-2">
+      <input type="text" placeholder="e.g. VBmSU" class="flex-1 p-2 bg-gray-800 text-white rounded" />
+      <button class="bg-green-500 text-black font-bold px-4 rounded">Load Betslip</button>
     </div>
-    <div class="font-bold mb-2">Juventus vs AC Milan</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="2.00">2.00</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.10">3.10</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.90">3.90</button>
-    </div>
-  </div>
-
-  <!-- Match 5 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>France - Ligue 1</div>
-      <div>12/06, 22:00</div>
-    </div>
-    <div class="font-bold mb-2">PSG vs Lyon</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.45">1.45</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.20">4.20</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="5.90">5.90</button>
-    </div>
-  </div>
-
-  <!-- Match 6 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Netherlands - Eredivisie</div>
-      <div>13/06, 19:00</div>
-    </div>
-    <div class="font-bold mb-2">Ajax vs Feyenoord</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.90">1.90</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.40">3.40</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.70">4.70</button>
-    </div>
-  </div>
-
-  <!-- Match 7 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Portugal - Primeira Liga</div>
-      <div>13/06, 21:00</div>
-    </div>
-    <div class="font-bold mb-2">Benfica vs Porto</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="2.10">2.10</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.00">3.00</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.70">3.70</button>
-    </div>
-  </div>
-
-  <!-- Match 8 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Turkey - Super Lig</div>
-      <div>13/06, 20:00</div>
-    </div>
-    <div class="font-bold mb-2">Galatasaray vs Fenerbahce</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="2.30">2.30</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.20">3.20</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.50">3.50</button>
-    </div>
-  </div>
-
-  <!-- Match 9 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Brazil - Serie A</div>
-      <div>14/06, 01:00</div>
-    </div>
-    <div class="font-bold mb-2">Flamengo vs Palmeiras</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.80">1.80</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.60">3.60</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.60">4.60</button>
-    </div>
-  </div>
-
-  <!-- Match 10 -->
-  <div class="bg-[#334155] p-4 rounded shadow text-sm">
-    <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-      <div>Argentina - Liga Profesional</div>
-      <div>14/06, 02:30</div>
-    </div>
-    <div class="font-bold mb-2">River Plate vs Boca Juniors</div>
-    <div class="grid grid-cols-3 gap-2 text-center">
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="2.00">2.00</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.30">3.30</button>
-      <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="3.90">3.90</button>
-    </div>
-  </div>
-</div>
+  </footer>
+</body>
+</html>

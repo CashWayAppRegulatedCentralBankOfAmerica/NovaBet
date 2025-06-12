@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Betika-Inspired Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <!-- Top Navigation -->
+  <div class="bg-[#16a34a] text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">BetNow</h1>
+    <div class="text-sm">Balance: <span class="font-semibold">$200.00</span></div>
+  </div>
+
+  <!-- Featured Banner -->
+  <div class="bg-gray-100 p-4 text-center shadow-inner">
+    <h2 class="text-lg font-semibold">🔥 Featured Match</h2>
+    <p class="text-sm text-gray-600">Real Madrid vs Barcelona - 7:00 PM</p>
+  </div>
+
+  <!-- Sports Tabs -->
+  <div class="flex overflow-x-auto space-x-4 p-4 border-b">
+    <button class="px-4 py-2 bg-[#16a34a] text-white rounded-full">Football</button>
+    <button class="px-4 py-2 bg-gray-200 rounded-full">Basketball</button>
+    <button class="px-4 py-2 bg-gray-200 rounded-full">Tennis</button>
+    <button class="px-4 py-2 bg-gray-200 rounded-full">Rugby</button>
+    <button class="px-4 py-2 bg-gray-200 rounded-full">More</button>
+  </div>
+
+  <!-- Matches List -->
+  <div class="p-4 space-y-4">
+    <div class="bg-gray-50 p-4 rounded-lg shadow flex flex-col space-y-2">
+      <div class="flex justify-between">
+        <span class="font-semibold">Arsenal vs Man City</span>
+        <span class="text-sm text-gray-500">Live</span>
+      </div>
+      <div class="flex justify-around text-center">
+        <button class="bg-gray-200 rounded px-3 py-1">1.92</button>
+        <button class="bg-gray-200 rounded px-3 py-1">Draw 3.10</button>
+        <button class="bg-gray-200 rounded px-3 py-1">2.25</button>
+      </div>
+      <button class="bg-[#16a34a] text-white py-1 mt-2 rounded">Bet</button>
+    </div>
+
+    <div class="bg-gray-50 p-4 rounded-lg shadow flex flex-col space-y-2">
+      <div class="flex justify-between">
+        <span class="font-semibold">Chelsea vs Liverpool</span>
+        <span class="text-sm text-gray-500">Starts 9:00 PM</span>
+      </div>
+      <div class="flex justify-around text-center">
+        <button class="bg-gray-200 rounded px-3 py-1">2.05</button>
+        <button class="bg-gray-200 rounded px-3 py-1">Draw 3.20</button>
+        <button class="bg-gray-200 rounded px-3 py-1">2.00</button>
+      </div>
+      <button class="bg-[#16a34a] text-white py-1 mt-2 rounded">Bet</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around p-2">
+    <button class="flex flex-col items-center text-[#16a34a]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 12V7" />
+      </svg>
+      <span class="text-xs">Home</span>
+    </button>
+    <button class="flex flex-col items-center text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 01.553-1.382L9 2m0 0l6 3m-6-3v18m6-15l5.447 2.724A2 2 0 0121 8.618v8.764a2 2 0 01-.553 1.382L15 22m0 0V4" />
+      </svg>
+      <span class="text-xs">Betslip</span>
+    </button>
+    <button class="flex flex-col items-center text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3a3 3 0 100-6z" />
+        <path d="M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2 2 6.477 2 12z" />
+      </svg>
+      <span class="text-xs">Wallet</span>
+    </button>
+    <button class="flex flex-col items-center text-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M5.121 17.804A1.5 1.5 0 016 17h12a1.5 1.5 0 01.879.296M12 3v2m6 16v1a1 1 0 001-1v-1a1 1 0 00-1-1v1zm-6 0v1a1 1 0 01-1-1v-1a1 1 0 011-1v1zm-6 0v1a1 1 0 001-1v-1a1 1 0 00-1-1v1z" />
+      </svg>
+      <span class="text-xs">Account</span>
+    </button>
+  </div>
+
+</body>
+</html>

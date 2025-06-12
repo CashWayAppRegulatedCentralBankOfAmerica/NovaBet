@@ -3,99 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
   <title>Betika Clone</title>
-  <link rel="manifest" href="manifest.json" />
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
+  <script defer>
+    // Auto-update odds every 1 hour
+    setInterval(() => {
+      document.querySelectorAll('.odds').forEach(el => {
+        el.textContent = (Math.random() * (5 - 1.5) + 1.5).toFixed(2);
       });
-    }
-
-    function updateOdds() {
-      const odds = document.querySelectorAll('[data-odds]');
-      odds.forEach(el => {
-        const base = parseFloat(el.dataset.base);
-        const fluctuation = (Math.random() * 0.1 - 0.05).toFixed(2);
-        const newVal = (base + parseFloat(fluctuation)).toFixed(2);
-        el.innerText = newVal;
-      });
-    }
-    setInterval(updateOdds, 3600000); // every hour
-
-    let banners = [
-      'Bet Big, Win Bigger – Try Live Bets!',
-      'Exclusive Bonuses for New Players!',
-      'Fast Withdrawals, Real Wins – Play Now!'
-    ];
-    let currentBanner = 0;
-    function rotateBanner() {
-      document.getElementById('promoText').innerText = banners[currentBanner];
-      currentBanner = (currentBanner + 1) % banners.length;
-    }
-    setInterval(rotateBanner, 30000); // every 30 seconds
+    }, 3600000);
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#0f172a] text-white font-sans">
-  <!-- Fixed Promo Banner -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-yellow-400 text-black p-3 shadow flex justify-center items-center">
-    <span id="promoText" class="font-bold text-center">Bet Big, Win Bigger – Try Live Bets!</span>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Fixed Top Header -->
+  <header class="fixed top-0 left-0 w-full bg-[#1e293b] text-white border-b border-gray-700 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+      <div class="text-2xl font-bold text-yellow-400">Betika!</div>
+      <div class="flex items-center gap-2 sm:gap-4">
+        <button class="text-green-500 text-sm font-semibold">Login</button>
+        <button class="bg-green-500 px-3 py-1 rounded text-black font-bold text-sm">Register</button>
+      </div>
+    </div>
   </header>
 
-  <!-- Top Tabs -->
-  <div class="pt-16 px-4 bg-[#0f172a] border-b border-gray-700 overflow-x-auto whitespace-nowrap text-sm flex gap-4">
-    <span class="text-green-400 font-semibold">Live (74)</span>
-    <span>Aviator</span>
+  <!-- Spacer to offset fixed header -->
+  <div class="h-[64px]"></div>
+
+  <!-- Promo Bar Fixed -->
+  <div class="fixed top-[64px] left-0 right-0 bg-yellow-300 py-2 px-4 text-center text-black font-semibold z-40">
+    Promotion: Deposit and Bet on 10 Matches to Win Big Today!
+  </div>
+  <div class="h-[48px]"></div>
+
+  <!-- Main Content -->
+  <div class="flex">
+
+    <!-- Match List Scrollable Section -->
+    <main class="flex-1 overflow-y-auto max-h-[calc(100vh-112px)] p-4">
+      <div class="space-y-4">
+        <!-- Ten Matches -->
+        <template id="match-template">
+          <div class="bg-white p-4 rounded shadow">
+            <div class="flex justify-between items-center mb-2">
+              <div class="font-bold">Team A vs Team B</div>
+              <div class="text-sm text-gray-500">Today 4:00 PM</div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button class="bg-green-100 text-green-800 py-2 rounded odds">2.45</button>
+              <button class="bg-yellow-100 text-yellow-800 py-2 rounded odds">3.10</button>
+              <button class="bg-red-100 text-red-800 py-2 rounded odds">2.90</button>
+            </div>
+          </div>
+        </template>
+
+        <!-- Insert Matches -->
+        <div id="match-container"></div>
+      </div>
+    </main>
+
+    <!-- Betslip Panel (Hidden on small, visible on lg) -->
+    <aside class="hidden lg:block w-[300px] bg-gray-800 text-white p-4 border-l border-gray-700 sticky top-[112px] h-[calc(100vh-112px)] overflow-y-auto">
+      <h2 class="text-xl font-bold mb-4">Betslip</h2>
+      <p class="text-sm text-gray-400">No selections yet.</p>
+    </aside>
   </div>
 
-  <!-- Main Content Scrollable Match List -->
-  <main class="h-[calc(100vh-8rem)] overflow-y-auto px-4 py-4 space-y-4">
-    <!-- Demo Matches -->
-    <div id="matchList" class="space-y-4">
-      <!-- Matches dynamically generated -->
-      <script>
-        const matches = [
-          { league: 'Poland - II Liga', time: '12/06, 16:00', teams: 'Wieczysta Krakow vs Kks 1925 Kalisz', odds: [1.41, 4.30, 6.40] },
-          { league: 'Lithuania - I Lyga', time: '12/06, 18:00', teams: 'Babrungas Plunge vs FK Kauno Zalgiris', odds: [1.21, 6.20, 10.00] },
-          { league: 'England - Premier League', time: '13/06, 21:00', teams: 'Arsenal vs Chelsea', odds: [2.00, 3.50, 3.80] },
-          { league: 'Spain - La Liga', time: '13/06, 23:00', teams: 'Real Madrid vs Barcelona', odds: [2.10, 3.20, 3.50] },
-          { league: 'Germany - Bundesliga', time: '14/06, 16:30', teams: 'Bayern vs Dortmund', odds: [1.85, 3.60, 4.20] },
-          { league: 'Italy - Serie A', time: '14/06, 19:00', teams: 'Inter vs Milan', odds: [2.25, 3.00, 3.75] },
-          { league: 'France - Ligue 1', time: '15/06, 20:00', teams: 'PSG vs Lyon', odds: [1.70, 4.00, 5.00] },
-          { league: 'Netherlands - Eredivisie', time: '15/06, 17:00', teams: 'Ajax vs PSV', odds: [2.30, 3.10, 3.90] },
-          { league: 'Portugal - Primeira Liga', time: '16/06, 21:30', teams: 'Porto vs Benfica', odds: [2.40, 3.00, 3.60] },
-          { league: 'USA - MLS', time: '16/06, 01:00', teams: 'LA Galaxy vs Inter Miami', odds: [2.60, 3.20, 2.90] },
-        ];
-
-        matches.forEach(m => {
-          document.write(`
-            <div class="bg-[#334155] p-4 rounded shadow text-sm">
-              <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
-                <div>${m.league}</div>
-                <div>${m.time}</div>
-              </div>
-              <div class="font-bold mb-2">${m.teams}</div>
-              <div class="grid grid-cols-3 gap-2 text-center">
-                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[0]}">${m.odds[0]}</button>
-                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[1]}">${m.odds[1]}</button>
-                <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="${m.odds[2]}">${m.odds[2]}</button>
-              </div>
-            </div>
-          `);
-        });
-      </script>
+  <!-- Fixed Bottom Betslip for Mobile -->
+  <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 border-t border-gray-700 z-50">
+    <div class="flex justify-between items-center">
+      <div class="font-bold">Betslip</div>
+      <div class="text-sm text-gray-300">No selections</div>
     </div>
-  </main>
+  </div>
 
-  <!-- Fixed Bottom Betslip -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-[#1e293b] border-t border-gray-700 p-4 z-50">
-    <div class="text-sm text-gray-300 mb-2">Do you have a shared betslip code? Enter it here.</div>
-    <div class="flex gap-2">
-      <input type="text" placeholder="e.g. VBmSU" class="flex-1 p-2 bg-gray-800 text-white rounded" />
-      <button class="bg-green-500 text-black font-bold px-4 rounded">Load Betslip</button>
-    </div>
-  </footer>
+  <!-- JS to clone matches -->
+  <script>
+    const matchTemplate = document.getElementById('match-template').content;
+    const container = document.getElementById('match-container');
+    for (let i = 0; i < 10; i++) {
+      const clone = document.importNode(matchTemplate, true);
+      const teams = [`Lions FC vs Tigers United`, `Sharks vs Eagles`, `Panthers vs Hawks`, `Cheetahs vs Wolves`, `Rhinos vs Bulls`, `Leopards vs Jaguars`, `Owls vs Falcons`, `Cobras vs Vipers`, `Scorpions vs Hornets`, `Dragons vs Phoenix`];
+      clone.querySelector(".font-bold").textContent = teams[i];
+      container.appendChild(clone);
+    }
+  </script>
 </body>
 </html>

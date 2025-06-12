@@ -1,79 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#1f2937">
-  <link rel="manifest" href="/manifest.json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.json">
   <title>Betika Clone</title>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('/service-worker.js');
       });
     }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('mobileSidebar');
+      sidebar.classList.toggle('hidden');
+    }
+
+    function updateOdds() {
+      const odds = document.querySelectorAll('[data-odds]');
+      odds.forEach(el => {
+        const base = parseFloat(el.dataset.base);
+        const fluctuation = (Math.random() * 0.1 - 0.05).toFixed(2);
+        const newVal = (base + parseFloat(fluctuation)).toFixed(2);
+        el.innerText = newVal;
+      });
+    }
+    setInterval(updateOdds, 5000);
+
+    let currentBanner = 0;
+    const banners = [
+      'Boost Your Winnings With Our Enhanced Odds! 💰',
+      'Bet Live, Win Big – Anytime, Anywhere! ⚽',
+      'Join Today & Get Free Bets On Your First Wager! 🎁'
+    ];
+    setInterval(() => {
+      currentBanner = (currentBanner + 1) % banners.length;
+      document.getElementById('rotatingBanner').innerText = banners[currentBanner];
+    }, 30000);
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="bg-gray-900 text-white">
-  <header class="flex items-center justify-between px-4 py-2 bg-gray-800">
-    <h1 class="text-2xl font-bold text-yellow-400">Betika!</h1>
-    <div>
-      <button class="bg-green-500 px-4 py-1 rounded text-white">Register</button>
-      <button class="ml-2 px-4 py-1 border border-green-500 rounded text-green-500">Login</button>
+<body class="bg-[#0f172a] text-white font-sans">
+  <!-- Top Navigation -->
+  <div class="flex justify-between items-center px-4 py-3 bg-[#1e293b] border-b border-gray-700">
+    <div class="text-2xl font-bold text-yellow-400">Betika!</div>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <button class="text-green-500 text-sm font-semibold">Login</button>
+      <button class="bg-green-500 px-3 py-1 rounded text-black font-bold text-sm">Register</button>
+      <button class="lg:hidden text-white px-3 py-1 rounded border border-gray-500" onclick="toggleSidebar()">Menu</button>
     </div>
-  </header>
+  </div>
 
-  <main class="p-4">
-    <!-- Banner Rotator -->
-    <div class="relative w-full h-40 mb-6 overflow-hidden rounded-lg">
-      <img id="banner" src="banner1.jpg" class="w-full h-full object-cover rounded-lg transition-opacity duration-1000">
-    </div>
+  <!-- Main Layout -->
+  <div class="flex flex-col lg:flex-row">
+    <!-- Sidebar -->
+    <aside id="mobileSidebar" class="w-full lg:w-60 h-auto lg:h-screen overflow-y-auto bg-[#1e293b] p-4 border-b lg:border-b-0 lg:border-r border-gray-700 hidden lg:block">
+      <nav class="grid grid-cols-1 gap-3 text-sm">
+        <div class="text-green-400 font-semibold">Home</div>
+      </nav>
+    </aside>
 
-    <!-- Odds Table -->
-    <section class="bg-gray-800 p-4 rounded-lg">
-      <h2 class="text-xl font-semibold mb-4">Today’s Matches</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="matches">
-        <div class="bg-gray-700 p-4 rounded-lg">
-          <p class="text-sm text-gray-300">Poland - II Liga</p>
-          <p class="font-semibold">Wieczysta Krakow vs Kks 1925 Kalisz</p>
-          <div class="flex justify-between mt-2">
-            <span class="bg-gray-600 px-2 py-1 rounded">1: <span class="odds">1.41</span></span>
-            <span class="bg-gray-600 px-2 py-1 rounded">X: <span class="odds">4.30</span></span>
-            <span class="bg-gray-600 px-2 py-1 rounded">2: <span class="odds">6.40</span></span>
+    <!-- Content -->
+    <main class="flex-1 p-4 space-y-4">
+      <!-- Promo Banner Rotator -->
+      <div class="bg-yellow-400 text-black p-3 rounded flex justify-center items-center font-semibold text-center text-sm sm:text-base" id="rotatingBanner">
+        Boost Your Winnings With Our Enhanced Odds! 💰
+      </div>
+
+      <!-- Match Listings -->
+      <div class="space-y-4">
+        <!-- Match 1 -->
+        <div class="bg-[#334155] p-4 rounded shadow text-sm">
+          <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
+            <div>Poland - II Liga</div>
+            <div>12/06, 16:00</div>
+          </div>
+          <div class="font-bold mb-2">Wieczysta Krakow vs Kks 1925 Kalisz</div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.41">1.41</button>
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="4.30">4.30</button>
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="6.40">6.40</button>
           </div>
         </div>
 
-        <div class="bg-gray-700 p-4 rounded-lg">
-          <p class="text-sm text-gray-300">Lithuania - I Lyga</p>
-          <p class="font-semibold">Babrunas Plunge vs FK Kauno Zalgiris</p>
-          <div class="flex justify-between mt-2">
-            <span class="bg-gray-600 px-2 py-1 rounded">1: <span class="odds">1.21</span></span>
-            <span class="bg-gray-600 px-2 py-1 rounded">X: <span class="odds">6.20</span></span>
-            <span class="bg-gray-600 px-2 py-1 rounded">2: <span class="odds">10.00</span></span>
+        <!-- Match 2 -->
+        <div class="bg-[#334155] p-4 rounded shadow text-sm">
+          <div class="flex flex-col sm:flex-row justify-between text-gray-300 mb-2">
+            <div>Lithuania - I Lyga</div>
+            <div>12/06, 18:00</div>
+          </div>
+          <div class="font-bold mb-2">Babrungas Plunge vs FK Kauno Zalgiris</div>
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="1.21">1.21</button>
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="6.20">6.20</button>
+            <button class="bg-gray-800 hover:bg-gray-700 p-2 rounded" data-odds data-base="10.00">10.00</button>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </main>
 
-  <script>
-    const banners = ["banner1.jpg", "banner2.jpg", "banner3.jpg"];
-    let current = 0;
-    setInterval(() => {
-      current = (current + 1) % banners.length;
-      document.getElementById("banner").src = banners[current];
-    }, 30000);
-
-    setInterval(() => {
-      document.querySelectorAll(".odds").forEach(el => {
-        const rand = (Math.random() * 5 + 1).toFixed(2);
-        el.textContent = rand;
-      });
-    }, 5000);
-  </script>
+    <!-- Betslip Right Panel -->
+    <aside class="w-full lg:w-72 p-4 bg-[#1e293b] border-t lg:border-t-0 lg:border-l border-gray-700">
+      <div class="text-sm text-gray-300 mb-2">Do you have a shared betslip code? Enter it here.</div>
+      <input type="text" placeholder="e.g. VBmSU" class="w-full p-2 bg-gray-800 text-white rounded mb-2"/>
+      <button class="w-full bg-green-500 text-black font-bold p-2 rounded">Load Betslip</button>
+    </aside>
+  </div>
 </body>
-
 </html>
